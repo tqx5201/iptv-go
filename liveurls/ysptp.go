@@ -99,6 +99,16 @@ var CCTVList = map[string]string{
 	"cctv8k_36m.m3u8": "Live1688400593818102",
 }
 
+var Client = &http.Client{
+	Timeout: 10 * time.Second,
+	Transport: &http.Transport{
+		TLSClientConfig:     &tls.Config{InsecureSkipVerify: true},
+		ForceAttemptHTTP2:   false,
+		MaxIdleConnsPerHost: 100,
+		IdleConnTimeout:     30 * time.Second,
+	},
+}
+
 func (y *Ysptp) HandleMainRequest(c *gin.Context, vid string) {
 
 	// 检查全局变量 cctvList 中是否包含指定的 ID
